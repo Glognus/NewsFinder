@@ -1,16 +1,31 @@
 language: android
 sudo: required
 jdk: oraclejdk8
+
 android:
   components:
-    - tools
-    - platform-tools
-    - build-tools-25.0.0
-    - android-23
-    - extra-google-m2repository
-    - extra-android-m2repository
+  - tools
+  - platform-tools
+  - build-tools-25.0.0
+  - android-23
+  - extra-google-m2repository
+  - extra-android-m2repository
 
 licenses:
-    - android-sdk-preview-license-.+
-    - android-sdk-license-.+
-    - google-gdk-license-.+
+- android-sdk-preview-license-.+
+- android-sdk-license-.+
+- google-gdk-license-.+
+
+after_success:
+- sh set_tags.sh
+
+deploy:
+  provider: releases
+  api_key:
+    secure: QddSoDmCX8NtFMMU8CQLaf38Us8Dg5mqXY5vqIVVzrJkhGx7LoAuaqo3BYk7PLuwt3i8wImEzjKd/7vPlj3UvTmrUzbDVPMFehckT27tf4q+oQ7ICB7/TYqo322t0MhswB//Ol9IUg9/GIRvp2QR9+++b3HS5745+IiuSu/TY5OkS/EaEyRv6gg56L9E3VV6gbDlFvxoPwWO8tuck6LgsYEavi7BOHCm9kjYwIN0w8ySdzWe3Uvy7H2CCz/Y2b0wCRWgQDrBK+saMtAcTkA3dmLDGPQ1IlTDBCU5HkOEWiJ0LQ/MgvD04tD+ETFE1e3UU6xYdP+vhbgWGBz3qLFld/XFO6yt83QNGVRxP4x9GJlHb7xZFYt02rD6e0+G5f7IT40qHmq5THxG+cBy3jMrbbkQAx77LV875cZCFmuM0/qDF6pApfS8r9xK0PaH8aAwZXktrSUpKBPT98+HA2qx0+f/d+SekbeULej1ZmesjAQ/et3r2k0IN9cSkmoC9wxh17n0SHwaEC11G7vQdlyqjhdE8xsujl40X55rXcsjL93vV8u8epPFXrsApVJhP/Tx5rkmrDWFOMbh8N2rBprhQxNV33n1Xy8Qy/uY+PikSfunXmfq61Uskmc6WJQKP7ArvCSHrvd1JZ0r9vs16uh34SYVvOFjIouJy8eoQDS3sLA=
+  file: NewsFinder/build/outputs/apk/NewsFinder*release*.apk
+  file_glob: "true"
+  skip_cleanup: true
+  on:
+  branch: master
+    repo: Glognus/NewsFinder
