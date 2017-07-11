@@ -5,6 +5,6 @@ NewsFinder
 
 ## Requirement
 You have to get an api key from https://newsapi.org/
-And add it in com.glognus.newfinder.APIConfig
+And add it in res/values/strings/api_key
 
 🚧 Work in progress 🚧

@@ -86,7 +86,7 @@ public class CardContentFragment extends Fragment {
                         .build();
 
                 Request request = new Request.Builder()
-                        .url("https://newsapi.org/v1/articles?source=the-next-web&sortBy=latest&apiKey=" + APIConfig.API_KEY)
+                        .url("https://newsapi.org/v1/articles?source=the-next-web&sortBy=latest&apiKey=" + getResources().getString(R.string.api_key))
                         .build();
 
                 Response response = client.newCall(request).execute();
