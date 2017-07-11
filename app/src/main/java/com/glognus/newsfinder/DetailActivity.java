@@ -25,6 +25,8 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.glognus.newsapi.article.ArticleItem;
+
 /**
  * Provides UI for the Detail page with Collapsing Toolbar.
  */
@@ -46,6 +48,7 @@ public class DetailActivity extends AppCompatActivity {
 
         int postion = getIntent().getIntExtra(EXTRA_POSITION, 0);
         Resources resources = getResources();
+        ArticleItem test = (ArticleItem) getIntent().getSerializableExtra("test");
         String[] places = resources.getStringArray(R.array.places);
         collapsingToolbar.setTitle(places[postion % places.length]);
 
@@ -54,7 +57,7 @@ public class DetailActivity extends AppCompatActivity {
         placeDetail.setText(placeDetails[postion % placeDetails.length]);
 
         String[] placeLocations = resources.getStringArray(R.array.place_locations);
-        TextView placeLocation =  (TextView) findViewById(R.id.place_location);
+        TextView placeLocation = (TextView) findViewById(R.id.place_location);
         placeLocation.setText(placeLocations[postion % placeLocations.length]);
 
         TypedArray placePictures = resources.obtainTypedArray(R.array.places_picture);
