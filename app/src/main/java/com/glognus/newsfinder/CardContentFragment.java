@@ -33,6 +33,7 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -70,12 +71,29 @@ public class CardContentFragment extends Fragment {
             progressDialog.show();
         }
 
+        private OkHttpClient client;
+        private final Gson gson = new Gson();
+
         @Override
         protected List<ArticleItem> doInBackground(Void... voids) {
-            Gson gson = new Gson();
             Article mySources = null;
+
             try {
-                mySources = gson.fromJson(run("https://newsapi.org/v1/articles?source=the-next-web&sortBy=latest&apiKey=" + APIConfig.API_KEY), Article.class);
+                client = new OkHttpClient.Builder()
+                        .connectTimeout(10, TimeUnit.SECONDS)
+                        .writeTimeout(10, TimeUnit.SECONDS)
+                        .readTimeout(30, TimeUnit.SECONDS)
+                        .build();
+
+                Request request = new Request.Builder()
+                        .url("https://newsapi.org/v1/articles?source=the-next-web&sortBy=latest&apiKey=" + APIConfig.API_KEY)
+                        .build();
+
+                Response response = client.newCall(request).execute();
+                if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+                mySources = gson.fromJson(response.body().charStream(), Article.class);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -90,17 +108,7 @@ public class CardContentFragment extends Fragment {
             CardContentFragment.this.adapter.setList(articleItems);
             progressDialog.hide();
         }
-
-        OkHttpClient client = new OkHttpClient();
-
-        String run(String url) throws IOException {
-            Request request = new Request.Builder()
-                    .url(url)
-                    .build();
-
-            try (Response response = client.newCall(request).execute()) {
-                return response.body().string();
-            }
-        }
     }
 }
+
+

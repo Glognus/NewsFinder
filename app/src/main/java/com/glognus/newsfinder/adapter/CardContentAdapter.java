@@ -2,6 +2,7 @@ package com.glognus.newsfinder.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
@@ -78,8 +79,7 @@ import java.util.List;
                 public void onClick(View v) {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, DetailActivity.class);
-                    intent.putExtra(DetailActivity.EXTRA_POSITION, getAdapterPosition());
-                  //  intent.putExtra("test", (Serializable) list.get(getAdapterPosition()));
+                    intent.putExtra("article", list.get(getAdapterPosition()));
                     context.startActivity(intent);
                 }
             });
@@ -91,7 +91,7 @@ import java.util.List;
                 public void onClick(View v) {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, DetailActivity.class);
-                    intent.putExtra(DetailActivity.EXTRA_POSITION, getAdapterPosition());
+                    intent.putExtra("article", list.get(getAdapterPosition()));
                     context.startActivity(intent);
                 }
             });
@@ -100,8 +100,12 @@ import java.util.List;
             shareImageButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    Snackbar.make(v, "Share article",
-                            Snackbar.LENGTH_LONG).show();
+                    Context context = v.getContext();
+                    String url = list.get(getAdapterPosition()).getUrl();
+
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    context.startActivity(i);
                 }
             });
         }
