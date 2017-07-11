@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">"News Finder"</string>
 <!-- Obtain your api key from https://newsapi.org/ -->
-    <string name="api_key">"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"</string>
+    <string name="api_key">"xxxxxxxxxxxxxxxxxxxxxxxxxx"</string>
 </resources>
