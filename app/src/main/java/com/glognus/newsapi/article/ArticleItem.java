@@ -3,7 +3,9 @@ package com.glognus.newsapi.article;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ArticleItem {
+import java.io.Serializable;
+
+public class ArticleItem implements Serializable {
 
 @SerializedName("author")
 @Expose

@@ -16,8 +16,6 @@
 
 package com.glognus.newsfinder;
 
-import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.glognus.newsapi.article.ArticleItem;
+import com.squareup.picasso.Picasso;
 
 /**
  * Provides UI for the Detail page with Collapsing Toolbar.
@@ -44,26 +43,20 @@ public class DetailActivity extends AppCompatActivity {
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         // Set title of Detail page
-        // collapsingToolbar.setTitle(getString(R.string.item_title));
 
-        int postion = getIntent().getIntExtra(EXTRA_POSITION, 0);
-        Resources resources = getResources();
-        ArticleItem test = (ArticleItem) getIntent().getSerializableExtra("test");
-        String[] places = resources.getStringArray(R.array.places);
-        collapsingToolbar.setTitle(places[postion % places.length]);
+        ArticleItem test = (ArticleItem) getIntent().getSerializableExtra("article");
+        collapsingToolbar.setTitle(test.getTitle());
 
-        String[] placeDetails = resources.getStringArray(R.array.place_details);
         TextView placeDetail = (TextView) findViewById(R.id.place_detail);
-        placeDetail.setText(placeDetails[postion % placeDetails.length]);
+        placeDetail.setText(test.getDescription());
 
-        String[] placeLocations = resources.getStringArray(R.array.place_locations);
-        TextView placeLocation = (TextView) findViewById(R.id.place_location);
-        placeLocation.setText(placeLocations[postion % placeLocations.length]);
+        TextView placeLocation = (TextView) findViewById(R.id.place_author);
+        placeLocation.setText(test.getAuthor());
 
-        TypedArray placePictures = resources.obtainTypedArray(R.array.places_picture);
         ImageView placePicutre = (ImageView) findViewById(R.id.image);
-        placePicutre.setImageDrawable(placePictures.getDrawable(postion % placePictures.length()));
+        Picasso.with(placePicutre.getContext())
+                .load(test.getUrlToImage())
+                .into(placePicutre);
 
-        placePictures.recycle();
     }
 }
