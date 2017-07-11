@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # thanks to http://szagurskii.com/blog/how-to-deploy-apk-to-github-releases-with-travis-ci/
 
 BRANCH="master"
