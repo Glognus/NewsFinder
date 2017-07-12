@@ -101,6 +101,21 @@ import java.util.List;
                 @Override
                 public void onClick(View v) {
                     Context context = v.getContext();
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey look at this ! \n"
+                            + list.get(getAdapterPosition()).getTitle() + "\n"
+                            + list.get(getAdapterPosition()).getUrl() + "\n\n");
+                    sendIntent.setType("text/plain");
+                    context.startActivity(sendIntent);
+                }
+            });
+
+            ImageButton externalUrlButton = (ImageButton) itemView.findViewById(R.id.externalurl_button);
+            externalUrlButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
                     String url = list.get(getAdapterPosition()).getUrl();
 
                     Intent i = new Intent(Intent.ACTION_VIEW);

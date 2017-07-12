@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2015 The Android Open Source Project
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,8 +33,7 @@
             android:id="@+id/card_image"
             android:layout_width="match_parent"
             android:layout_height="@dimen/card_image_height"
-            android:scaleType="centerCrop"
-            tools:src="@drawable/a" />
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/card_title"
@@ -55,10 +53,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/card_image"
-            android:layout_marginLeft="@dimen/md_keylines"
-            android:layout_marginTop="@dimen/md_keylines"
             android:layout_marginBottom="@dimen/md_keylines"
+            android:layout_marginLeft="@dimen/md_keylines"
             android:layout_marginRight="@dimen/md_keylines"
+            android:layout_marginTop="@dimen/md_keylines"
             android:ellipsize="end"
             android:singleLine="true"
             android:textColor="@color/dark_grey"
@@ -75,13 +73,24 @@
 
         <ImageButton
             android:id="@+id/share_button"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="@dimen/cards_button_width"
             android:layout_height="@dimen/cards_button_height"
-            android:layout_marginRight="@dimen/md_keylines"
-            app:srcCompat="@drawable/ic_share"
-            android:layout_below="@+id/card_text"
             android:layout_alignParentRight="true"
+            android:layout_below="@+id/card_text"
+            android:layout_marginRight="@dimen/md_keylines"
+            android:tint="@color/button_grey"
+            app:srcCompat="@drawable/ic_share" />
+
+        <ImageButton
+            android:id="@+id/externalurl_button"
             style="?android:attr/borderlessButtonStyle"
-            android:tint="@color/button_grey" />
+            android:layout_width="@dimen/cards_button_width"
+            android:layout_height="@dimen/cards_button_height"
+            android:layout_below="@+id/card_text"
+            android:layout_marginRight="@dimen/md_keylines"
+            android:layout_toLeftOf="@id/share_button"
+            android:tint="@color/button_grey"
+            app:srcCompat="@drawable/ic_external_url" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>

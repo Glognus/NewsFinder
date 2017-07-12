@@ -57,6 +57,8 @@ public class CardContentFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        // gridlayout manager
+        // intent de partage
         return recyclerView;
     }
 
