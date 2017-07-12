@@ -17,10 +17,12 @@
 package com.glognus.newsfinder;
 
 import android.app.ProgressDialog;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,21 +47,32 @@ import okhttp3.Response;
 public class CardContentFragment extends Fragment {
 
     CardContentAdapter adapter;
-
+    SwipeRefreshLayout mSwipeRefreshLayout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        RecyclerView recyclerView = (RecyclerView) inflater.inflate(
-                R.layout.recycler_view, container, false);
-        adapter = new CardContentAdapter(recyclerView.getContext());
+        adapter = new CardContentAdapter(getContext());
+        View view = inflater.inflate(R.layout.card_content_recycler_view, container, false);
+        mSwipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swifeRefresh);
+        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.my_recycler_view);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new GetListArticleItem().execute();
+            }
+        });
         // Get articles list item
         new GetListArticleItem().execute();
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        if(getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+        }
+        else{
+            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        }
         // gridlayout manager
-        // intent de partage
-        return recyclerView;
+        return view;
     }
 
     private class GetListArticleItem extends AsyncTask<Void, Void, List<ArticleItem>> {
@@ -71,6 +84,7 @@ public class CardContentFragment extends Fragment {
             progressDialog.setMessage("Loading...");
             progressDialog.setCancelable(false);
             progressDialog.show();
+            mSwipeRefreshLayout.setRefreshing(true);
         }
 
         private OkHttpClient client;
@@ -109,6 +123,7 @@ public class CardContentFragment extends Fragment {
         protected void onPostExecute(List<ArticleItem> articleItems) {
             CardContentFragment.this.adapter.setList(articleItems);
             progressDialog.hide();
+            mSwipeRefreshLayout.setRefreshing(false);
         }
     }
 }

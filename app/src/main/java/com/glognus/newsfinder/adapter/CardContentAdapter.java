@@ -84,9 +84,8 @@ import java.util.List;
                 }
             });
 
-            // Adding Snackbar to Action Button inside card
-            Button button = (Button)itemView.findViewById(R.id.action_button);
-            button.setOnClickListener(new View.OnClickListener(){
+            Button buttonReadme = (Button)itemView.findViewById(R.id.action_button);
+            buttonReadme.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     Context context = v.getContext();
